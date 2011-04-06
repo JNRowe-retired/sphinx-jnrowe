@@ -111,7 +111,7 @@ p.sidebar-subtitle {
     font-weight: bold;
 }
 
-pre.literal-block {
+pre.literal-block, div.highlight {
     background-color: rgb(238, 238, 238);
     border: dashed 0.1em rgb(139, 139, 139);
     color: rgb(0, 0, 0);

@@ -1,0 +1,170 @@
+{%- set reldelim1 = reldelim1 is not defined and ' &#8594;' or reldelim1 %}
+{%- set reldelim2 = reldelim2 is not defined and ' |' or reldelim2 %}
+{%- macro relbar (keys=True) %}
+        <div class="breadcrumbs">
+          <h3>{{ _('Navigation') }}</h3>
+          <ul>
+            {%- for rellink in rellinks %}
+            <li class="bounce{% if loop.first %} first{% endif %}">
+              <a href="{{ pathto(rellink[0]) }}" title="{{ rellink[1]|striptags }}"{% if keys %}
+                accesskey="{{ rellink[2] }}"{% endif %}>{{ rellink[3] }}</a>
+              {%- if not loop.first %}{{ reldelim2 }}{% endif %}</li>
+            {%- endfor %}
+            {%- block rootrellink %}
+            <li><a href="{{ pathto(master_doc) }}">{{ shorttitle|e }}</a>{{ reldelim1 }}</li>
+            {%- endblock %}
+            {%- for parent in parents %}
+            <li><a href="{{ parent.link|e }}"{% if keys and loop.last %} accesskey="U"{% endif %}>{{ parent.title }}</a>{{ reldelim1 }}</li>
+            {%- endfor %}
+            <li><a href="">{{ title|striptags }}</a></li>
+            {%- block relbaritems %} {% endblock %}
+          </ul>
+        </div>{% if template_debug %}<!-- class="related" -->{% endif %}
+{%- endmacro %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="ICBM" content="52.213,0.105" />
+    <title>{{ title|striptags }} − {{ docstitle|e }}</title>
+    <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+    <link rel="stylesheet" href="{{ pathto('_static/sphinx.css', 1) }}" type="text/css" />
+    {% if feed_link %}
+    <link rel="alternate" type="application/atom+xml" title="Updated items" href="/updates.atom" />
+    {% endif %}
+    <link rel="openid.server" href="http://openid.claimid.com/server" />
+    <link rel="openid.delegate" href="http://openid.claimid.com/jnrowe" />
+    <meta http-equiv="x-xrds-location" content="http://claimid.com/jnrowe/xrds" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '{{ pathto("", 1) }}',
+        VERSION:     '{{ release|e }}',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '{{ file_suffix }}',
+        HAS_SOURCE:  {{ has_source|lower }}
+      };
+    </script>
+    {%- for scriptfile in script_files %}
+    <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+    {%- endfor %}
+    {%- if use_opensearch %}
+    <link rel="search" type="application/opensearchdescription+xml" title="Search within {{ docstitle|e }}" href="{{ pathto('_static/opensearch.xml', 1) }}" />
+    {%- endif %}
+    {%- if favicon %}
+    <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}" type="image/png" />
+    {%- endif %}
+{%- block linktags %}
+    {%- if hasdoc('about') %}
+    <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />
+    {%- endif %}
+    <link rel="index" title="{{ _('Index') }}" href="{{ pathto('index') }}" />
+    <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
+    {%- if hasdoc('copyright') %}
+    <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}" />
+    {%- endif %}
+    <link rel="top" title="{{ docstitle|e }}" href="{{ pathto('index') }}" />
+    {%- if parents %}
+    <link rel="up" title="{{ parents[-1].title|striptags }}" href="{{ parents[-1].link|e }}" />
+    {%- endif %}
+    {%- if next %}
+    <link rel="next" title="{{ next.title|striptags }}" href="{{ next.link|e }}" />
+    {%- endif %}
+    {%- if prev %}
+    <link rel="prev" title="{{ prev.title|striptags }}" href="{{ prev.link|e }}" />
+    {%- endif %}
+    <link rel="contents" href="{{ pathto('index') }}" title="Site contents" />
+    <link rel="home" href="{{ pathto(master_doc) }}" title="Home page" />
+    <link rel="made" href="mailto:jnrowe@gmail.com" title="Author's email address" />
+    <link rel="me" href="{{ pathto(master_doc) }}" />
+{%- endblock %}
+{%- block extrahead %}{% endblock %}
+  </head>
+  <body id="jnrowe-github-com">
+    <div id="corewrapper">
+      <h1 class="skipvisual"><a href="{{ pathto(master_doc) }}" rel="home author me" accesskey="1">{{ docstitle|e }}</a></h1>
+      <ul class="skipvisual">
+        <li>
+          <a href="#content" accesskey="2">
+            Skip navigation section
+          </a>
+        </li>
+        <li>
+          <a href="{{ pathto('accessibility') }}" title="Accessibility statement"
+            accesskey="0">Accessibility statement</a>
+        </li>
+        <li>
+          <a href="{{ pathto('search') }}">Search</a>
+        </li>
+      </ul>
+
+      <div id="content">
+{%- block relbar1 %}{{ relbar() }}{% endblock %}
+        {%- if pagename != "search" %}
+        <div class="quicksearch">
+          <p class="sidebar-title">{{ _('Quick search') }}</p>
+          <form class="search" action="{{ pathto('search') }}" method="get">
+            <div>
+              <input type="text" name="q" size="18" /> <input type="submit" value="{{ _('Go') }}" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </div>
+          </form>
+        </div>
+        {%- endif %}
+
+{%- block document %}
+        <div class="entry">
+          <div class="entry-content">
+            {% block body %}{% endblock %}
+          </div>{% if template_debug %}<!-- class="entry-content" -->{% endif %}
+{%- endblock %}
+          <div class="page_meta">
+            <ul>
+              <li>
+                <a href="http://jnrowe.github.com/{{ pagename }}{{ file_suffix }}" rel="bookmark" title="Permalink">Permalink</a>
+                {%- if tinyurl %}
+                    <small>(<a href="http://tinyurl.com/{{ tinyurl }}">TinyURL link for this page</a>)</small>
+                {%- endif %}
+              </li>
+              {%- if tags %}
+              <li>
+                  <span class="tags">Tags:
+                    {%- for tag in tags %}
+                      <a href="http://technorati.com/tags/{{ tag }}/" rel="tag directory">{{ tag }}</a>
+                    {%- endfor %}
+                  </span>
+              </li>
+              {%- endif %}
+              <li>
+                Posted by:
+                  <span class="author vcard"><a class="url fn" rel="me" href="{{ pathto('contact') }}">James Rowe</a></span>
+              </li>
+              <li>
+              {%- if hasdoc('copyright') %}
+                Rights: © <a class="rights" href="{{ pathto('copyright') }}" title="Copyright info" accesskey="8">Copyright</a> {{ copyright|e }}.
+              {%- else %}
+                Rights: © Copyright {{ copyright|e }}.
+              {%- endif %}
+              </li>
+              <li>
+              {%- if show_sphinx %}
+                Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version|e }}.
+              {%- endif %}
+              </li>
+            </ul>
+            <p>
+              <a href="#content">Return to Top</a>
+            </p>
+          </div>{% if template_debug %}<!-- class="page_meta" -->{% endif %}
+          <div class="clearer"></div>
+        </div>{% if template_debug %}<!-- class="entry" -->{% endif %}
+
+{%- block relbar2 %}{{ relbar(False) }}{% endblock %}
+
+{%- block footer %}
+        </div>{% if template_debug %}<!-- id="content" -->{% endif %}
+{%- endblock %}
+    </div>{% if template_debug %}<!-- class="corewrapper" -->{% endif %}
+  </body>
+</html>

@@ -1,11 +1,15 @@
 @charset "UTF-8";
 
+{% set cursive_font = '"Reenie Beanie", cursive' %}
+{% set monospace_font = '"Inconsolata", "Monaco", monospace' %}
+{% set sansserif_font = '"Verdana", "Arial", sans-serif' %}
+
 html, body {
     background-color: rgb(77, 104, 132);
     background-image: url("body_background.png");
     background-repeat: repeat-x;
     color: rgb(0, 0, 0);
-    font-family: "Verdana", "Arial", sans-serif;
+    font-family: {{ sansserif_font }};
 }
 
 div.breadcrumbs {

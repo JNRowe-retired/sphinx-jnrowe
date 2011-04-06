@@ -52,9 +52,7 @@
     {%- if use_opensearch %}
     <link rel="search" type="application/opensearchdescription+xml" title="Search within {{ docstitle|e }}" href="{{ pathto('_static/opensearch.xml', 1) }}" />
     {%- endif %}
-    {%- if favicon %}
-    <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}" type="image/png" />
-    {%- endif %}
+    <link rel="shortcut icon" href="{{ pathto('_static/icon.png', 1) }}" type="image/png" />
 {%- block linktags %}
     {%- if hasdoc('about') %}
     <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />

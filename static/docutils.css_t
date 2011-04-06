@@ -20,7 +20,7 @@ div.admonition, div.attention, div.caution, div.danger, div.error,
 div.hint, div.important, div.note, div.tip, div.warning, div.sidebar {
     border: 0.2em solid;
     margin: 1em;
-    padding: 0.3em;
+    padding: 0.1em 0.3em;
 }
 
 p.admonition-title {

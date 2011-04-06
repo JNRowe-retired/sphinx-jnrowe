@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+{% set cursive_font = '"Reenie Beanie", cursive' %}
+{% set monospace_font = '"Inconsolata", "Monaco", monospace' %}
+{% set sansserif_font = '"Verdana", "Arial", sans-serif' %}
+
 blockquote.epigraph {
     margin: 2em 5em;
 }
@@ -20,7 +24,7 @@ div.hint, div.important, div.note, div.tip, div.warning, div.sidebar {
 }
 
 p.admonition-title {
-    font-family: sans-serif;
+    font-family: {{ sansserif_font }};
     font-weight: bold;
 }
 
@@ -93,13 +97,13 @@ p.rubric {
 }
 
 p.sidebar-title {
-    font-family: sans-serif;
+    font-family: {{ sansserif_font }};
     font-size: larger;
     font-weight: bold;
 }
 
 p.sidebar-subtitle {
-    font-family: sans-serif;
+    font-family: {{ sansserif_font }};
     font-weight: bold;
 }
 

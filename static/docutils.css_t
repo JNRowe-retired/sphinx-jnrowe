@@ -51,6 +51,10 @@ div.warning p.admonition-title {
     color: rgb(255, 0, 0);
 }
 
+th.field-name {
+    background-color: rgb(255, 255, 187);
+}
+
 div.figure {
     background-color: rgb(241, 241, 241);
     color: inherit;
